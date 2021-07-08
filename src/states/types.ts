@@ -1,13 +1,13 @@
 import {Dispatch} from 'react';
 
 export enum Type {
-  EXAMPLE = 'EXAMPLE',
+  HOME = 'HOME',
 }
 
-export type Action = {type: Type.EXAMPLE; data: any};
+export type Action = {type: Type.HOME; data: any[]};
 
 export interface State {
-  example: '';
+  home: any[];
 }
 
 export interface Store {

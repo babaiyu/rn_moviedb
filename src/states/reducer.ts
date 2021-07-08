@@ -4,10 +4,10 @@ const reducer = (state: State, action: Action): State => {
   const {type, data} = action;
 
   switch (type) {
-    case Type.EXAMPLE:
+    case Type.HOME:
       return {
         ...state,
-        example: data,
+        home: data,
       };
 
     default:

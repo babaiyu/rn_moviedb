@@ -7,7 +7,7 @@ type Props = {
 };
 
 const defaultState: State = {
-  example: '',
+  home: [],
 };
 
 const myContext = createContext<Store>({

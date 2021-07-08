@@ -1,7 +1,7 @@
 import {Action, Type} from './types';
 
-// Example
-export const actionExample = (data = ''): Action => ({
-  type: Type.EXAMPLE,
+// Get Movies at Home
+export const actionHome = (data = []): Action => ({
+  type: Type.HOME,
   data,
 });
