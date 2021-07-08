@@ -81,7 +81,16 @@ project.ext.react = [
     enableHermes: false,  // clean and rebuild if changing
 ]
 
+// Only import Material Icons
+project.ext.vectoricons = [
+    iconFontNames: ['MaterialIcons.ttf']
+]
+
 apply from: "../../node_modules/react-native/react.gradle"
+
+// React Native Vector Icons
+apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
+
 
 /**
  * Set this to true to create two separate APKs instead of one:

@@ -2,6 +2,7 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import customTheme from './combineThemes';
 
 // Import Screens
 import HomeScreen from '../screens/Home';
@@ -21,7 +22,7 @@ function BottomTab() {
 
 export default function Routes() {
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={customTheme}>
       <Stack.Navigator
         screenOptions={() => ({...TransitionPresets.SlideFromRightIOS})}>
         <>
