@@ -83,7 +83,7 @@ project.ext.react = [
 
 // Only import Material Icons
 project.ext.vectoricons = [
-    iconFontNames: ['MaterialIcons.ttf']
+    iconFontNames: ['MaterialIcons.ttf', 'MaterialCommunityIcons']
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"

@@ -9,6 +9,9 @@ const globalStyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  paddingHorizontal: {
+    paddingHorizontal: 20,
+  },
 });
 
 export default globalStyles;
