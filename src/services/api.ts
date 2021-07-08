@@ -1,4 +1,4 @@
-const BASE_URL = 'https://api.themoviedb.org/3/movie';
+const BASE_URL = 'https://api.themoviedb.org/3';
 const MOVIE_KEY = 'cf351551b4b72640578e20445eebffd6';
 
 const handleResponse = async (response: Response) => {
@@ -11,8 +11,22 @@ const handleResponse = async (response: Response) => {
 type TMovies = 'now_playing' | 'popular' | 'top_rated' | 'upcoming';
 
 // Movies
-export const apiMovies = async (page: number = 1, typeMovies: TMovies) => {
-  const uri = `${BASE_URL}/${typeMovies}?page=${page}?api_key=${MOVIE_KEY}`;
+export const apiMovies = async (page = 1, typeMovies: TMovies) => {
+  const uri = `${BASE_URL}/movie/${typeMovies}?page=${page}&api_key=${MOVIE_KEY}`;
+  const res = await fetch(uri, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    },
+  });
+
+  return handleResponse(res);
+};
+
+// Search Movie
+export const apiSearchMovies = async (page = 1, query = '') => {
+  const uri = `${BASE_URL}/search/movie?page=${page}&query=${query}&api_key=${MOVIE_KEY}`;
   const res = await fetch(uri, {
     method: 'GET',
     headers: {
