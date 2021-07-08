@@ -1,5 +1,6 @@
 const BASE_URL = 'https://api.themoviedb.org/3';
 const MOVIE_KEY = 'cf351551b4b72640578e20445eebffd6';
+export const IMAGE_URL = 'https://image.tmdb.org/t/p/original';
 
 const handleResponse = async (response: Response) => {
   const text = await response.text();
@@ -8,7 +9,7 @@ const handleResponse = async (response: Response) => {
   return data;
 };
 
-type TMovies = 'now_playing' | 'popular' | 'top_rated' | 'upcoming';
+export type TMovies = 'now_playing' | 'popular' | 'top_rated' | 'upcoming';
 
 // Movies
 export const apiMovies = async (page = 1, typeMovies: TMovies) => {
