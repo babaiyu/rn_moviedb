@@ -1,7 +1,8 @@
+import {useScrollToTop} from '@react-navigation/native';
 import Loading from 'components/Loading';
 import MyCard from 'components/MyCard';
 import useSearch from 'hooks/useSearch';
-import React, {useCallback} from 'react';
+import React, {useCallback, useRef} from 'react';
 import {FlatList, SafeAreaView, StyleSheet, View} from 'react-native';
 import {Text, Searchbar, Button} from 'react-native-paper';
 import {useStateContext} from 'states/store';
@@ -11,6 +12,10 @@ export default function SearchScreen() {
   const {state} = useStateContext();
   const {changeQuery, query, error, loading, changePage} = useSearch();
   const {search} = state;
+
+  const scrollRef = useRef<any>(null);
+
+  useScrollToTop(scrollRef);
 
   const renderItem = useCallback(({item}: any) => <MyCard {...item} />, []);
   const keyExtractor = useCallback(
@@ -31,6 +36,7 @@ export default function SearchScreen() {
         <Text>There is an error</Text>
       ) : (
         <FlatList
+          ref={scrollRef}
           data={search}
           renderItem={renderItem}
           keyExtractor={keyExtractor}
