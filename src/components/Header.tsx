@@ -5,6 +5,7 @@ import {Appbar, Modal, Portal, Title, RadioButton} from 'react-native-paper';
 import _ from 'lodash';
 import {TMovies} from 'services/api';
 import {useEffect} from 'react';
+import {useNavigation} from '@react-navigation/native';
 
 const filter: {name: string; value: TMovies}[] = [
   {
@@ -27,10 +28,21 @@ const filter: {name: string; value: TMovies}[] = [
 
 interface Props {
   onChange: (v: TMovies) => void;
-  type: TMovies;
+  title?: string;
+  type?: TMovies;
+  isFilter?: boolean;
+  isBack?: boolean;
 }
 
-export default function Header({onChange, type}: Props) {
+export default function Header({
+  onChange,
+  title,
+  type,
+  isFilter,
+  isBack,
+}: Props) {
+  const navigation = useNavigation();
+
   const [visible, setVisible] = useState(false);
   const [selected, setSelected] = useState('');
 
@@ -53,15 +65,20 @@ export default function Header({onChange, type}: Props) {
     setVisible(false);
   };
 
+  const onBack = () => {
+    navigation.goBack();
+  };
+
   useEffect(() => {
     changeFilterByV();
-  }, [type]);
+  }, [type, onBack, isFilter, isBack]);
 
   return (
     <Portal>
       <Appbar.Header>
-        <Appbar.Content title="Home" subtitle={selected} />
-        <Appbar.Action icon="filter" onPress={onShowModal} />
+        {isBack && <Appbar.BackAction onPress={onBack} />}
+        <Appbar.Content title={title || 'Home'} subtitle={selected} />
+        {isFilter && <Appbar.Action icon="filter" onPress={onShowModal} />}
       </Appbar.Header>
       <Modal
         visible={visible}
