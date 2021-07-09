@@ -11,6 +11,7 @@ import SplashScreen from 'screens/Splash';
 import HomeScreen from '../screens/Home';
 import BookmarkScreen from 'screens/Bookmark';
 import DetailScreen from 'screens/Detail';
+import SearchScreen from 'screens/Search';
 import {myColors} from 'constants/constants';
 
 const Stack = createStackNavigator();
@@ -54,6 +55,15 @@ function BottomTab() {
         }}
       />
       <Tab.Screen
+        name="SearchScreen"
+        component={SearchScreen}
+        options={{
+          tabBarIcon: ({color, size}) => (
+            <Icon name="search" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
         name="BookmarkScreen"
         component={BookmarkScreen}
         options={{
@@ -84,7 +94,7 @@ export default function Routes() {
           <Stack.Screen
             name="BottomTab"
             component={BottomTab}
-            options={{headerShown: true}}
+            options={{headerShown: false}}
           />
           <Stack.Screen
             name="DetailScreen"
