@@ -5,15 +5,14 @@ import {useStateContext} from 'states/store';
 import useHome from 'hooks/useHome';
 import Loading from 'components/Loading';
 import MyCard from 'components/MyCard';
-import Header from 'components/Header';
 import globalStyles from 'styles/globalStyles';
+import Filter from 'components/Filter';
 
 export default function HomeScreen() {
   const {state} = useStateContext();
   const {home} = state;
 
-  const {loading, page, type, error, getMovies, changePage, changeType} =
-    useHome();
+  const {loading, page, error, getMovies, changePage, changeType} = useHome();
 
   const renderItem = useCallback(({item}: any) => <MyCard {...item} />, []);
   const keyExtractor = useCallback(
@@ -48,6 +47,7 @@ export default function HomeScreen() {
             </Button>
           }
         />
+        <Filter onChange={changeType} />
       </SafeAreaView>
     );
 }
