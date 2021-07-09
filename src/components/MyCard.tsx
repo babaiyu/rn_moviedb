@@ -7,10 +7,12 @@ import {IMAGE_URL} from 'services/api';
 import {useNavigation} from '@react-navigation/native';
 import {useStateContext} from 'states/store';
 import {actionDetail} from 'states/action';
+import useBookmark from 'hooks/useBookmark';
 
 export default function MyCard(props: any) {
   const navigation = useNavigation();
   const {dispatch} = useStateContext();
+  const {addBookmark, loadBookmark} = useBookmark();
 
   const paragraph = maxParagraph(props?.overview);
   const subtitle = `${dayjs(props?.release_date).format('DD MMM, YYYY')} | ${
@@ -24,6 +26,13 @@ export default function MyCard(props: any) {
     }, 500);
   };
 
+  const onAddBookmark = async () => {
+    await addBookmark(props);
+    setTimeout(async () => {
+      await loadBookmark();
+    }, 500);
+  };
+
   return (
     <Card style={styles.card}>
       <Card.Title title={props?.title} subtitle={subtitle} />
@@ -33,6 +42,9 @@ export default function MyCard(props: any) {
       </Card.Content>
       <Card.Actions>
         <Button onPress={onNavigateDetail}>Read more</Button>
+        <Button onPress={onAddBookmark} icon="bookmark">
+          SAVE
+        </Button>
       </Card.Actions>
     </Card>
   );
