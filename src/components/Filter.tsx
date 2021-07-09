@@ -1,10 +1,9 @@
 import React, {useState} from 'react';
 import {myColors} from 'constants/constants';
 import {StyleSheet, View} from 'react-native';
-import {Appbar, Modal, Portal, Title, RadioButton} from 'react-native-paper';
+import {Modal, Portal, Title, RadioButton, FAB} from 'react-native-paper';
 import _ from 'lodash';
 import {TMovies} from 'services/api';
-import {useEffect} from 'react';
 import {useNavigation} from '@react-navigation/native';
 
 const filter: {name: string; value: TMovies}[] = [
@@ -28,29 +27,12 @@ const filter: {name: string; value: TMovies}[] = [
 
 interface Props {
   onChange: (v: TMovies) => void;
-  title?: string;
-  type?: TMovies;
-  isFilter?: boolean;
-  isBack?: boolean;
 }
 
-export default function Header({
-  onChange,
-  title,
-  type,
-  isFilter,
-  isBack,
-}: Props) {
+export default function Filter({onChange}: Props) {
   const navigation = useNavigation();
 
   const [visible, setVisible] = useState(false);
-  const [selected, setSelected] = useState('');
-
-  const changeFilterByV = () => {
-    const theFilter: any = _.find(filter, {value: type});
-
-    setSelected(theFilter?.name);
-  };
 
   const onFilter = (v: any) => {
     onChange(v);
@@ -69,25 +51,19 @@ export default function Header({
     navigation.goBack();
   };
 
-  useEffect(() => {
-    changeFilterByV();
-  }, [type, onBack, isFilter, isBack]);
-
   return (
-    <Portal>
-      <Appbar.Header>
-        {isBack && <Appbar.BackAction onPress={onBack} />}
-        <Appbar.Content title={title || 'Home'} subtitle={selected} />
-        {isFilter && <Appbar.Action icon="filter" onPress={onShowModal} />}
-      </Appbar.Header>
-      <Modal
-        visible={visible}
-        onDismiss={onCloseModal}
-        contentContainerStyle={styles.modal}>
-        <Title>Filter Movies</Title>
-        <FilterMovies onChange={onFilter} />
-      </Modal>
-    </Portal>
+    <View>
+      <FAB style={styles.fab} small icon="filter" onPress={onShowModal} />
+      <Portal>
+        <Modal
+          visible={visible}
+          onDismiss={onCloseModal}
+          contentContainerStyle={styles.modal}>
+          <Title>Filter Movies</Title>
+          <FilterMovies onChange={onFilter} />
+        </Modal>
+      </Portal>
+    </View>
   );
 }
 
@@ -108,5 +84,11 @@ const styles = StyleSheet.create({
   },
   headerList: {
     marginTop: 60,
+  },
+  fab: {
+    position: 'absolute',
+    margin: 20,
+    right: 0,
+    bottom: 0,
   },
 });

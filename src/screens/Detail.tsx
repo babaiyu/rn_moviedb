@@ -3,11 +3,12 @@ import {SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
 import {Title, Paragraph, Caption, Chip, Text} from 'react-native-paper';
 import useDetail from 'hooks/useDetail';
 import globalStyles from 'styles/globalStyles';
-import Header from 'components/Header';
 import MyImage from 'components/MyImage';
 import Loading from 'components/Loading';
 import dayjs from 'dayjs';
 import {myColors} from 'constants/constants';
+import {useEffect} from 'react';
+import {useNavigation} from '@react-navigation/native';
 
 const Genres = ({data}: {data: any[]}) => (
   <View style={styles.row}>
@@ -18,11 +19,16 @@ const Genres = ({data}: {data: any[]}) => (
 );
 
 export default function DetailScreen() {
+  const navigation = useNavigation();
   const {loading, error, data} = useDetail();
 
   const subtitle = `${dayjs(data?.release_date).format('DD MMM, YYYY')} | ${
     data?.vote_average
   }`;
+
+  useEffect(() => {
+    navigation.setOptions({title: data?.title});
+  }, [data]);
 
   if (loading) return <Loading />;
 
@@ -30,7 +36,6 @@ export default function DetailScreen() {
   else
     return (
       <SafeAreaView style={globalStyles.container}>
-        <Header onChange={() => null} title={data?.title} isBack />
         <ScrollView>
           <View style={[globalStyles.center, styles.detail]}>
             <MyImage source={data?.poster_path} />

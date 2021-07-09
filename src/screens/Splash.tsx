@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
-import {Text} from 'react-native-paper';
+import {Text, Title} from 'react-native-paper';
 import {SafeAreaView} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import {StackActions, useNavigation} from '@react-navigation/native';
 import globalStyles from 'styles/globalStyles';
 
 export default function SplashScreen() {
@@ -9,13 +9,13 @@ export default function SplashScreen() {
 
   useEffect(() => {
     setTimeout(() => {
-      navigation.navigate('BottomTab');
+      navigation.dispatch(StackActions.replace('BottomTab'));
     }, 3000);
   }, []);
 
   return (
     <SafeAreaView style={globalStyles.center}>
-      <Text>SplashScreen</Text>
+      <Title>SplashScreen</Title>
     </SafeAreaView>
   );
 }

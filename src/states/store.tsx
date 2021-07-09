@@ -9,6 +9,7 @@ type Props = {
 const defaultState: State = {
   home: [],
   detail: undefined,
+  search: [],
 };
 
 const myContext = createContext<Store>({

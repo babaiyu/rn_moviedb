@@ -9,10 +9,17 @@ const reducer = (state: State, action: Action): State => {
         ...state,
         home: data,
       };
+
     case Type.DETAIL:
       return {
         ...state,
         detail: data,
+      };
+
+    case Type.SEARCH:
+      return {
+        ...state,
+        search: data,
       };
 
     default:

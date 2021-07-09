@@ -1,19 +1,23 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useRef} from 'react';
 import {Text, Button} from 'react-native-paper';
 import {FlatList, SafeAreaView, RefreshControl, StyleSheet} from 'react-native';
 import {useStateContext} from 'states/store';
 import useHome from 'hooks/useHome';
 import Loading from 'components/Loading';
 import MyCard from 'components/MyCard';
-import Header from 'components/Header';
 import globalStyles from 'styles/globalStyles';
+import Filter from 'components/Filter';
+import {useScrollToTop} from '@react-navigation/native';
 
 export default function HomeScreen() {
   const {state} = useStateContext();
   const {home} = state;
 
-  const {loading, page, type, error, getMovies, changePage, changeType} =
-    useHome();
+  const scrollRef = useRef<any>(null);
+
+  useScrollToTop(scrollRef);
+
+  const {loading, page, error, getMovies, changePage, changeType} = useHome();
 
   const renderItem = useCallback(({item}: any) => <MyCard {...item} />, []);
   const keyExtractor = useCallback(
@@ -27,8 +31,8 @@ export default function HomeScreen() {
   else
     return (
       <SafeAreaView style={globalStyles.container}>
-        <Header onChange={changeType} type={type} isFilter isBack={false} />
         <FlatList
+          ref={scrollRef}
           data={home}
           renderItem={renderItem}
           keyExtractor={keyExtractor}
@@ -49,6 +53,7 @@ export default function HomeScreen() {
             </Button>
           }
         />
+        <Filter onChange={changeType} />
       </SafeAreaView>
     );
 }
