@@ -20,14 +20,6 @@ export default function HomeScreen() {
     (i: any, index: number) => index.toString(),
     [],
   );
-  const getItemLayout = useCallback(
-    (data, index) => ({
-      length: 200,
-      offset: 200 * index,
-      index,
-    }),
-    [],
-  );
 
   if (loading && page === 1) return <Loading />;
 
@@ -35,19 +27,17 @@ export default function HomeScreen() {
   else
     return (
       <SafeAreaView style={globalStyles.container}>
-        <Header onChange={changeType} type={type} />
+        <Header onChange={changeType} type={type} isFilter isBack={false} />
         <FlatList
           data={home}
           renderItem={renderItem}
           keyExtractor={keyExtractor}
           maxToRenderPerBatch={8}
           windowSize={10}
-          getItemLayout={getItemLayout}
           style={globalStyles.paddingHorizontal}
           refreshControl={
             <RefreshControl onRefresh={getMovies} refreshing={false} />
           }
-          contentContainerStyle={styles.headerList}
           ListFooterComponentStyle={styles.footerList}
           ListFooterComponent={
             <Button
@@ -68,9 +58,9 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   headerList: {
-    marginTop: 60,
+    marginTop: 10,
   },
   footerList: {
-    marginBottom: 60,
+    marginVertical: 10,
   },
 });
