@@ -27,7 +27,6 @@ export default function HomeScreen() {
   else
     return (
       <SafeAreaView style={globalStyles.container}>
-        <Header onChange={changeType} type={type} isFilter isBack={false} />
         <FlatList
           data={home}
           renderItem={renderItem}

@@ -30,7 +30,6 @@ export default function DetailScreen() {
   else
     return (
       <SafeAreaView style={globalStyles.container}>
-        <Header onChange={() => null} title={data?.title} isBack />
         <ScrollView>
           <View style={[globalStyles.center, styles.detail]}>
             <MyImage source={data?.poster_path} />
