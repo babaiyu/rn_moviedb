@@ -41,7 +41,7 @@ export const apiSearchMovies = async (page = 1, query = '') => {
 
 // Get Movie by ID
 export const apiMovieID = async (movieId: number) => {
-  const uri = `${BASE_URL}/${movieId}?api_key=${MOVIE_KEY}`;
+  const uri = `${BASE_URL}/movie/${movieId}?api_key=${MOVIE_KEY}`;
   const res = await fetch(uri, {
     method: 'GET',
     headers: {

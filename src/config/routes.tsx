@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import {BackHandler, Alert} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -9,12 +10,34 @@ import customTheme from './combineThemes';
 import SplashScreen from 'screens/Splash';
 import HomeScreen from '../screens/Home';
 import BookmarkScreen from 'screens/Bookmark';
+import DetailScreen from 'screens/Detail';
 import {myColors} from 'constants/constants';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 function BottomTab() {
+  useEffect(() => {
+    const backAction = () => {
+      Alert.alert('Hold on!', 'Are you sure you want to quit now?', [
+        {
+          text: 'Cancel',
+          onPress: () => null,
+          style: 'cancel',
+        },
+        {text: 'YES', onPress: () => BackHandler.exitApp()},
+      ]);
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+
+    return () => backHandler.remove();
+  }, []);
+
   return (
     <Tab.Navigator
       tabBarOptions={{
@@ -61,7 +84,12 @@ export default function Routes() {
           <Stack.Screen
             name="BottomTab"
             component={BottomTab}
-            options={{headerShown: false}}
+            options={{headerShown: true}}
+          />
+          <Stack.Screen
+            name="DetailScreen"
+            component={DetailScreen}
+            options={{headerShown: true}}
           />
         </>
       </Stack.Navigator>

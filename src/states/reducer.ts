@@ -9,6 +9,11 @@ const reducer = (state: State, action: Action): State => {
         ...state,
         home: data,
       };
+    case Type.DETAIL:
+      return {
+        ...state,
+        detail: data,
+      };
 
     default:
       throw new Error('There is no actions');
