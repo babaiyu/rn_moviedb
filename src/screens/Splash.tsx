@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Text, Title} from 'react-native-paper';
+import {Caption, Title} from 'react-native-paper';
 import {SafeAreaView} from 'react-native';
 import {StackActions, useNavigation} from '@react-navigation/native';
 import globalStyles from 'styles/globalStyles';
@@ -15,7 +15,8 @@ export default function SplashScreen() {
 
   return (
     <SafeAreaView style={globalStyles.center}>
-      <Title>SplashScreen</Title>
+      <Title>RN MovieDB</Title>
+      <Caption>read detail movies before watching</Caption>
     </SafeAreaView>
   );
 }
