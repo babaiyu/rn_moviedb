@@ -11,6 +11,12 @@ module.exports = {
         },
       },
     ],
+    [
+      'module:react-native-dotenv',
+      {
+        moduleName: '@env',
+      },
+    ],
   ],
   env: {
     production: {
