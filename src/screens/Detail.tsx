@@ -9,6 +9,7 @@ import dayjs from 'dayjs';
 import {myColors} from 'constants/constants';
 import {useEffect} from 'react';
 import {useNavigation} from '@react-navigation/native';
+import {useStateContext} from 'states/store';
 
 const Genres = ({data}: {data: any[]}) => (
   <View style={styles.row}>
@@ -20,6 +21,7 @@ const Genres = ({data}: {data: any[]}) => (
 
 export default function DetailScreen() {
   const navigation = useNavigation();
+  const {state} = useStateContext();
   const {loading, error, data} = useDetail();
 
   const subtitle = `${dayjs(data?.release_date).format('DD MMM, YYYY')} | ${
@@ -27,7 +29,7 @@ export default function DetailScreen() {
   }`;
 
   useEffect(() => {
-    navigation.setOptions({title: data?.title});
+    navigation.setOptions({title: state.detail?.title});
   }, [data]);
 
   if (loading) return <Loading />;
