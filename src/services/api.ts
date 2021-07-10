@@ -1,6 +1,5 @@
-const BASE_URL = 'https://api.themoviedb.org/3';
-const MOVIE_KEY = 'cf351551b4b72640578e20445eebffd6';
-export const IMAGE_URL = 'https://image.tmdb.org/t/p/w500';
+import {BASE_URL, MOVIE_KEY, IMAGE_URL as imageUrl} from '@env';
+export const IMAGE_URL = imageUrl;
 
 const handleResponse = async (response: Response) => {
   const text = await response.text();
