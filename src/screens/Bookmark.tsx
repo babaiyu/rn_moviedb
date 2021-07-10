@@ -1,15 +1,16 @@
 import MyCard from 'components/MyCard';
 import useBookmark from 'hooks/useBookmark';
-import React, {useCallback, useRef} from 'react';
+import React, {useCallback, useRef, useEffect} from 'react';
 import {FlatList, SafeAreaView, StyleSheet, View} from 'react-native';
 import {Button, Text} from 'react-native-paper';
-import {useScrollToTop} from '@react-navigation/native';
+import {useScrollToTop, useIsFocused} from '@react-navigation/native';
 import globalStyles from 'styles/globalStyles';
 
 export default function BookmarkScreen() {
   const {data, loadBookmark} = useBookmark();
 
   const scrollRef = useRef<any>(null);
+  const isFocused = useIsFocused();
 
   useScrollToTop(scrollRef);
 
@@ -24,6 +25,12 @@ export default function BookmarkScreen() {
 
     scrollRef.current?.scrollToOffset({offset: 0, animated: true});
   };
+
+  useEffect(() => {
+    if (isFocused) {
+      onPressReload();
+    }
+  }, [isFocused]);
 
   return (
     <SafeAreaView style={globalStyles.container}>

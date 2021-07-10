@@ -7,39 +7,27 @@ export default function useBookmark() {
   const {setItem, getItem} = AsyncStorage;
 
   const [data, setData] = useState<any[]>([]);
-  const [updateTime, setUpdateTime] = useState<any>(undefined);
-
-  const onUpdateTime = () => {
-    setUpdateTime(+new Date());
-  };
 
   const addBookmark = async (item: any) => {
-    const filterBookmark = data.filter(i => i.id === item?.id);
+    const filterBookmark = data.filter(i => i.id === item.id);
     if (filterBookmark.length === 0) {
       const newBookmark = [item, ...data];
-      setData(newBookmark);
       await setItem(BOOKMARK, JSON.stringify(newBookmark));
 
-      setTimeout(() => {
-        onUpdateTime();
-      }, 1000);
+      await loadBookmark();
     } else deleteBookmark(item);
   };
 
   const deleteBookmark = async (item: any) => {
     const newBookmark = data.filter(i => i.id !== item.id);
-    setData(newBookmark);
     await setItem(BOOKMARK, JSON.stringify(newBookmark));
-
-    setTimeout(() => {
-      onUpdateTime();
-    }, 1000);
+    await loadBookmark();
   };
 
   const loadBookmark = async () => {
-    let result = [];
+    let result: any[] = [];
     const bookString = await getItem(BOOKMARK);
-    const allBookmark = (bookString ? JSON.parse(bookString) : []) as any[];
+    const allBookmark = bookString ? JSON.parse(bookString) : [];
 
     for (let i of allBookmark) result.push(i);
     setData(result);
@@ -47,7 +35,11 @@ export default function useBookmark() {
 
   useEffect(() => {
     loadBookmark();
-  }, [updateTime]);
+
+    return () => {
+      setData([]);
+    };
+  }, []);
 
   return {addBookmark, deleteBookmark, loadBookmark, data};
 }
